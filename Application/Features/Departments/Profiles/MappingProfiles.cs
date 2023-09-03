@@ -1,7 +1,10 @@
 ﻿using Application.Features.Departments.Commands.Create;
 using Application.Features.Departments.Commands.Delete;
 using Application.Features.Departments.Commands.Update;
+using Application.Features.Departments.Queries.GetList;
 using AutoMapper;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -22,5 +25,8 @@ public class MappingProfiles : Profile
 
         CreateMap<Department, UpdatedDepartmentResponse>().ReverseMap();
         CreateMap<Department, UpdateDepartmentCommand>().ReverseMap();
+
+        CreateMap<Department, GetListDepartmentListItemDto>().ReverseMap();
+        CreateMap<Paginate<Department>, GetListResponse<GetListDepartmentListItemDto>>().ReverseMap();
     }
 }

@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Departments\Rules\" />
-    <Folder Include="Features\Departments\Queries\" />
     <Folder Include="Features\Employees\Constants\" />
     <Folder Include="Features\Employees\Rules\" />
     <Folder Include="Features\Titles\Constants\" />

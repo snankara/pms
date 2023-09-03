@@ -1,7 +1,10 @@
 ﻿using Application.Features.Departments.Commands.Create;
 using Application.Features.Departments.Commands.Delete;
 using Application.Features.Departments.Commands.Update;
+using Application.Features.Departments.Queries.GetList;
 using Application.Features.Titles.Commands.Create;
+using Core.Application.Requests;
+using Core.Application.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +26,15 @@ namespace WebApi.Controllers
         {
             DeleteDepartmentCommand deleteDepartmentCommand =  new() { Id = id};
             DeletedDepartmentResponse response = await Mediator.Send(deleteDepartmentCommand);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
+        {
+            GetListDepartmentQuery getListDepartmentQuery = new() { PageRequest = pageRequest };
+            GetListResponse<GetListDepartmentListItemDto> response = await Mediator.Send(getListDepartmentQuery);
+
             return Ok(response);
         }
 

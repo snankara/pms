@@ -1,8 +1,11 @@
-﻿using Application.Features.Titles.Commands.Create;
+﻿using Application.Features.Departments.Queries.GetList;
+using Application.Features.Titles.Commands.Create;
 using Application.Features.Titles.Commands.Delete;
 using Application.Features.Titles.Commands.Update;
 using Application.Features.Titles.Queries.GetById;
 using Application.Features.Titles.Queries.GetByName;
+using Core.Application.Requests;
+using Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -42,7 +45,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{name}")]
+        [HttpGet("{name:regex(^[[A-Za-z]])}")]
         public async Task<IActionResult> GetByName([FromRoute] string name)
         {
             GetByNameTitleQuery getByNameTitleQuery = new() { Name = name };
