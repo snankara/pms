@@ -13,6 +13,7 @@ namespace Application.Features.Departments.Commands.Create;
 public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>
 {
     public string Name { get; set; }
+    public string Description { get; set; }
 
     public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, CreatedDepartmentResponse>
     {
@@ -31,7 +32,7 @@ public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>
 
             await _departmentRepository.AddAsync(department);
 
-            return _mapper.Map<CreatedDepartmentResponse>(request);
+            return _mapper.Map<CreatedDepartmentResponse>(department);
         }
     }
 }

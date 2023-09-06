@@ -3,15 +3,11 @@ using Application.Features.Employees.Commands.Delete;
 using Application.Features.Employees.Commands.Update;
 using Application.Features.Employees.Queries.GetById;
 using Application.Features.Employees.Queries.GetList;
+using Application.Features.Employees.Queries.GetListByDynamic;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Employees.Profiles;
 
@@ -23,7 +19,9 @@ public class MappingProfiles : Profile
         CreateMap<Employee, CreatedEmployeeResponse>().ReverseMap();
 
         CreateMap<Paginate<Employee>, GetListResponse<GetListEmployeeListItemDto>>().ReverseMap();
-        CreateMap<Employee, GetListEmployeeListItemDto>().ReverseMap();
+        CreateMap<Employee, GetListEmployeeListItemDto>()
+            .ForMember(destinationMember: e => e.DepartmentName, memberOptions: opt => opt.MapFrom(e => e.Department.Name))
+            .ReverseMap();
 
         CreateMap<Employee, GetByIdEmployeeResponse>().ReverseMap();
 
@@ -31,6 +29,10 @@ public class MappingProfiles : Profile
         CreateMap<Employee, UpdateEmployeeCommand>().ReverseMap();
 
         CreateMap<Employee, DeletedEmployeeResponse>().ReverseMap();
+
+        CreateMap<Paginate<Employee>, GetListResponse<GetListByDynamicEmployeeListItemDto>>().ReverseMap();
+        CreateMap<Employee, GetListByDynamicEmployeeListItemDto>().ReverseMap();
+
 
     }
 }

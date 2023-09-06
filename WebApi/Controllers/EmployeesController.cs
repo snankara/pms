@@ -3,8 +3,10 @@ using Application.Features.Employees.Commands.Delete;
 using Application.Features.Employees.Commands.Update;
 using Application.Features.Employees.Queries.GetById;
 using Application.Features.Employees.Queries.GetList;
+using Application.Features.Employees.Queries.GetListByDynamic;
 using Core.Application.Requests;
 using Core.Application.Responses;
+using Core.Persistence.Dynamic;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +30,15 @@ namespace WebApi.Controllers
         {
             GetListEmployeeQuery getListEmployeeQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListEmployeeListItemDto> response = await Mediator.Send(getListEmployeeQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("GetListByDynamic")]
+        public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] DynamicQuery? dynamicQuery)
+        {
+            GetListByDynamicEmployeeQuery getListByDynamicEmployeeQuery = new() { PageRequest = pageRequest, DynamicQuery = dynamicQuery };
+            GetListResponse<GetListByDynamicEmployeeListItemDto> response = await Mediator.Send(getListByDynamicEmployeeQuery);
+
             return Ok(response);
         }
 
