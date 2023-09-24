@@ -1,11 +1,12 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Transaction;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Departments.Commands.Create;
 
-public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>
+public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>, ITransactionalRequest
 {
     public string Name { get; set; }
     public string Description { get; set; }
