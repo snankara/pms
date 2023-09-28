@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -13,10 +14,15 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Departments.Queries.GetList;
 
-public class GetListDepartmentQuery : IRequest<GetListResponse<GetListDepartmentListItemDto>>
+public class GetListDepartmentQuery : IRequest<GetListResponse<GetListDepartmentListItemDto>>, ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 
+    public string CacheKey => $"GetListDepartmentQuery({PageRequest.PageIndex},{PageRequest.PageSize})";
+
+    public bool BypassCache { get; }
+
+    public TimeSpan? SlidingExpiration { get; }
 
     public class GetListDepartmentQueryHandler : IRequestHandler<GetListDepartmentQuery, GetListResponse<GetListDepartmentListItemDto>>
     {
