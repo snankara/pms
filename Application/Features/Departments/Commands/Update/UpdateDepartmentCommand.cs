@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -10,10 +11,15 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Departments.Commands.Update;
 
-public class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>
+public class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>, ICacheRemoverRequest
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+
+    public string? CacheKey => "";
+    public bool BypassCache => false;
+
+    public string? CacheGroupKey => "GetDepartments";
 
     public class UpdateDepartmentCommandHandler : IRequestHandler<UpdateDepartmentCommand, UpdatedDepartmentResponse>
     {

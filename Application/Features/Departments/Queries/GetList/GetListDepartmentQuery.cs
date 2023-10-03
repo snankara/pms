@@ -24,6 +24,8 @@ public class GetListDepartmentQuery : IRequest<GetListResponse<GetListDepartment
 
     public TimeSpan? SlidingExpiration { get; }
 
+    public string? CacheGroupKey => "GetDepartments";
+
     public class GetListDepartmentQueryHandler : IRequestHandler<GetListDepartmentQuery, GetListResponse<GetListDepartmentListItemDto>>
     {
         private readonly IDepartmentRepository _departmentRepository;

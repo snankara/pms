@@ -1,5 +1,6 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -10,9 +11,16 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Departments.Commands.Delete;
 
-public class DeleteDepartmentCommand : IRequest<DeletedDepartmentResponse>
+public class DeleteDepartmentCommand : IRequest<DeletedDepartmentResponse>, ICacheRemoverRequest
 {
     public Guid Id { get; set; }
+
+    public string? CacheKey => "";
+
+    public bool BypassCache => false;
+
+    public string? CacheGroupKey => "GetDepartments";
+
 
     public class DeleteDepartmentCommandHandler : IRequestHandler<DeleteDepartmentCommand, DeletedDepartmentResponse>
     {
