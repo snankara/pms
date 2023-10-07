@@ -1,6 +1,7 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Caching;
+using Core.Application.Pipelines.Logging;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Departments.Queries.GetList;
 
-public class GetListDepartmentQuery : IRequest<GetListResponse<GetListDepartmentListItemDto>>, ICachableRequest
+public class GetListDepartmentQuery : IRequest<GetListResponse<GetListDepartmentListItemDto>>, ICachableRequest, ILoggableRequest
 {
     public PageRequest PageRequest { get; set; }
 
