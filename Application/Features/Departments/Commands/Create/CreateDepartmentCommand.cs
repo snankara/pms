@@ -1,13 +1,14 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Caching;
+using Core.Application.Pipelines.Logging;
 using Core.Application.Pipelines.Transaction;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Departments.Commands.Create;
 
-public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>, ITransactionalRequest,  ICacheRemoverRequest
+public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>, ITransactionalRequest,  ICacheRemoverRequest, ILoggableRequest
 {
     public string Name { get; set; }
     public string Description { get; set; }
