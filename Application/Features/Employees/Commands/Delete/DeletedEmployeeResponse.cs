@@ -6,8 +6,4 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Employees.Commands.Delete;
 
-public class DeletedEmployeeResponse
-{
-    public Guid Id { get; set; }
-    public string FirstName { get; set; }
-}
+public record DeletedEmployeeResponse(Guid Id, string FirstName);

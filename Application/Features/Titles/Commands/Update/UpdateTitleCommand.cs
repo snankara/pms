@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Titles.Rules;
+using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Titles.Commands.Update;
 
-public class UpdateTitleCommand : IRequest<UpdatedTitleResponse>
+public sealed class UpdateTitleCommand : IRequest<UpdatedTitleResponse>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -19,15 +20,19 @@ public class UpdateTitleCommand : IRequest<UpdatedTitleResponse>
     {
         private readonly ITitleRepository _titleRepository;
         private readonly IMapper _mapper;
+        private readonly TitleBusinessRules _titleBusinessRules;
 
-        public UpdateTitleCommandHandler(ITitleRepository titleRepository, IMapper mapper)
+        public UpdateTitleCommandHandler(ITitleRepository titleRepository, IMapper mapper, TitleBusinessRules titleBusinessRules)
         {
             _titleRepository = titleRepository;
             _mapper = mapper;
+            _titleBusinessRules = titleBusinessRules;
         }
 
         public async Task<UpdatedTitleResponse> Handle(UpdateTitleCommand request, CancellationToken cancellationToken)
         {
+            await _titleBusinessRules.TitleMustExistsWhenUpdated(request.Id);
+
             Title title = await _titleRepository.GetAsync(predicate: t => t.Id == request.Id);
 
             _mapper.Map(request, title);

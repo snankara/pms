@@ -6,8 +6,4 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Titles.Queries.GetByName;
 
-public class GetByNameTitleResponse
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-}
+public record GetByNameTitleResponse(Guid Id, string Name);

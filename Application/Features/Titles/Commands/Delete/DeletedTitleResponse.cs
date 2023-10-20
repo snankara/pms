@@ -6,7 +6,4 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Titles.Commands.Delete;
 
-public class DeletedTitleResponse
-{
-    public string Name { get; set; }
-}
+public record DeletedTitleResponse(string Name);

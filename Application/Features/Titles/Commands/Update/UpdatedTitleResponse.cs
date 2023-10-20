@@ -6,8 +6,4 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Titles.Commands.Update;
 
-public class UpdatedTitleResponse
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-}
+public record UpdatedTitleResponse(Guid Id, string Name);

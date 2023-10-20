@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Titles.Constants;
 
-public class TitlesMessages
+public sealed class TitlesMessages
 {
     public const string TitleNameExists = "Title name exists";
+
+    public const string NoTitleToDeleteWasFound = "No title to delete was found";
+
+    public const string NoTitleToUpdateWasFound = "No title to update was found";
+
+    public const string NoTitleToRetrieveWasFound = "No title to retrieve was found";
 }

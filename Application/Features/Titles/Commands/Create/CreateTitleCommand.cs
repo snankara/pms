@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Titles.Commands.Create;
 
-public class CreateTitleCommand : IRequest<CreatedTitleResponse>
+public sealed class CreateTitleCommand : IRequest<CreatedTitleResponse>
 {
     public string Name { get; set; }
 
@@ -33,7 +33,6 @@ public class CreateTitleCommand : IRequest<CreatedTitleResponse>
             await _titleBusinessRules.TitleNameCannotBeDuplicatedWhenInserted(request.Name);
 
             Title title = _mapper.Map<Title>(request);
-            title.Id = Guid.NewGuid();
 
             await _titleRepository.AddAsync(title);
 

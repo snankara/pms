@@ -6,8 +6,4 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Employees.Commands.Update;
 
-public class UpdatedEmployeeResponse
-{
-    public Guid Id { get; set; }
-    public string FirstName { get; set; }
-}
+public record UpdatedEmployeeResponse(Guid Id, string FirstName);
