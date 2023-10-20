@@ -6,8 +6,4 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Departments.Commands.Create;
 
-public class CreatedDepartmentResponse
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-}
+public record CreatedDepartmentResponse(Guid Id, string Name);

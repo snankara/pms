@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Departments.Queries.GetList;
 
-public class GetListDepartmentQuery : IRequest<GetListResponse<GetListDepartmentListItemDto>>, ICachableRequest, ILoggableRequest
+public sealed class GetListDepartmentQuery : IRequest<GetListResponse<GetListDepartmentListItemDto>>, ICachableRequest, ILoggableRequest
 {
     public PageRequest PageRequest { get; set; }
 

@@ -6,8 +6,4 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Departments.Queries.GetList;
 
-public class GetListDepartmentListItemDto
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-}
+public record GetListDepartmentListItemDto(Guid Id, string Name);

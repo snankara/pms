@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Departments.Rules;
+using Application.Services.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Caching;
 using Domain.Entities;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Departments.Commands.Update;
 
-public class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>, ICacheRemoverRequest
+public sealed class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>, ICacheRemoverRequest
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -25,6 +26,7 @@ public class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>, ICac
     {
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
+        private readonly DepartmentBusinessRules _departmentBusinessRules;
 
         public UpdateDepartmentCommandHandler(IDepartmentRepository departmentRepository, IMapper mapper)
         {
@@ -34,13 +36,15 @@ public class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>, ICac
 
         public async Task<UpdatedDepartmentResponse> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
         {
+            await _departmentBusinessRules.DepartmentMustExistsWhenUpdated(request.Id);
+
             Department department = await _departmentRepository.GetAsync(d => d.Id == request.Id);
 
             _mapper.Map<Department>(request);
 
             await _departmentRepository.UpdateAsync(department);
 
-            return _mapper.Map<UpdatedDepartmentResponse>(request);
+            return _mapper.Map<UpdatedDepartmentResponse>(department);
         }
     }
 }

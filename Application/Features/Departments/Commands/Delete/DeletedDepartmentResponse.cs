@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Departments.Commands.Delete;
 
-public class DeletedDepartmentResponse
-{
-    public Guid Id { get; set; }
-}
+public record DeletedDepartmentResponse(Guid Id);
+

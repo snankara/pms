@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Employees.Rules;
+using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Employees.Commands.Create;
 
-public class CreateEmployeeCommand:IRequest<CreatedEmployeeResponse>
+public sealed class CreateEmployeeCommand:IRequest<CreatedEmployeeResponse>
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -22,17 +23,21 @@ public class CreateEmployeeCommand:IRequest<CreatedEmployeeResponse>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMapper _mapper;
+        private readonly EmployeeBusinessRules _employeeBusinessRules;
 
-        public CreateEmployeeCommandHandler(IEmployeeRepository employeeRepository, IMapper mapper)
+        public CreateEmployeeCommandHandler(IEmployeeRepository employeeRepository, IMapper mapper, EmployeeBusinessRules employeeBusinessRules)
         {
             _employeeRepository = employeeRepository;
             _mapper = mapper;
+            _employeeBusinessRules = employeeBusinessRules;
         }
 
         public async Task<CreatedEmployeeResponse> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
+            await _employeeBusinessRules.TitleMustExistsWhenEmployeeInserted(request.TitleId);
+            await _employeeBusinessRules.DepartmentMustExistsWhenEmployeeInserted(request.DepartmentId);
+
             Employee employee = _mapper.Map<Employee>(request);
-            employee.Id = Guid.NewGuid();
 
             await _employeeRepository.AddAsync(employee);
 
