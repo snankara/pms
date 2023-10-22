@@ -45,7 +45,7 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{name:regex(^[[A-Za-z]])}")]
+        [HttpGet("GetByName/{name}")]
         public async Task<IActionResult> GetByName([FromRoute] string name)
         {
             GetByNameTitleQuery getByNameTitleQuery = new() { Name = name };

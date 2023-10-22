@@ -28,10 +28,11 @@ public sealed class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse
         private readonly IMapper _mapper;
         private readonly DepartmentBusinessRules _departmentBusinessRules;
 
-        public UpdateDepartmentCommandHandler(IDepartmentRepository departmentRepository, IMapper mapper)
+        public UpdateDepartmentCommandHandler(IDepartmentRepository departmentRepository, IMapper mapper, DepartmentBusinessRules departmentBusinessRules)
         {
             _departmentRepository = departmentRepository;
             _mapper = mapper;
+            _departmentBusinessRules = departmentBusinessRules;
         }
 
         public async Task<UpdatedDepartmentResponse> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
@@ -40,7 +41,7 @@ public sealed class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse
 
             Department department = await _departmentRepository.GetAsync(d => d.Id == request.Id);
 
-            _mapper.Map<Department>(request);
+            _mapper.Map(request, department);
 
             await _departmentRepository.UpdateAsync(department);
 

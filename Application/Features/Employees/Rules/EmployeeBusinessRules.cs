@@ -1,10 +1,11 @@
 ﻿using Application.Features.Employees.Constants;
 using Application.Services.Repositories;
+using Core.Application.Rules;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 
 namespace Application.Features.Employees.Rules;
 
-public sealed class EmployeeBusinessRules
+public sealed class EmployeeBusinessRules : BaseBusinessRules
 {
     private readonly IEmployeeRepository _employeeRepository;
     private readonly ITitleRepository _titleRepository;
