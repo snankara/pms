@@ -43,4 +43,12 @@ public sealed class DepartmentBusinessRules : BaseBusinessRules
         if (!result) throw new BusinessException(DepartmentsMessages.NoDepartmentToDeleteWasFound);
 
     }
+
+    public async Task DepartmentMustExistsWhenGetById(Guid id)
+    {
+        bool result = await _departmentRepository.AnyAsync(predicate: t => t.Id == id);
+
+        if (!result) throw new BusinessException(DepartmentsMessages.NoDepartmentToRetrieveWasFound);
+
+    }
 }
