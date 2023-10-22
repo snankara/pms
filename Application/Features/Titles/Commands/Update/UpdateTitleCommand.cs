@@ -32,6 +32,7 @@ public sealed class UpdateTitleCommand : IRequest<UpdatedTitleResponse>
         public async Task<UpdatedTitleResponse> Handle(UpdateTitleCommand request, CancellationToken cancellationToken)
         {
             await _titleBusinessRules.TitleMustExistsWhenUpdated(request.Id);
+            await _titleBusinessRules.TitleNameCannotBeDuplicatedWhenUpdated(request.Name);
 
             Title title = await _titleRepository.GetAsync(predicate: t => t.Id == request.Id);
 

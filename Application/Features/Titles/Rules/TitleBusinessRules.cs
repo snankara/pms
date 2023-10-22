@@ -59,4 +59,13 @@ public sealed class TitleBusinessRules : BaseBusinessRules
         if (!result) throw new BusinessException(TitlesMessages.NoTitleToRetrieveWasFound);
 
     }
+
+    public async Task TitleNameCannotBeDuplicatedWhenUpdated(string name)
+    {
+        bool result = await _titleRepository.AnyAsync(predicate: t => t.Name.ToLower() == name.ToLower());
+
+        if (result) throw new BusinessException(TitlesMessages.TitleNameExists);
+
+    }
+
 }
