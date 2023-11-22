@@ -1,6 +1,8 @@
 ﻿using Application.Features.Departments.Commands.Create;
 using Application.Features.Departments.Commands.Delete;
 using Application.Features.Departments.Commands.Update;
+using Application.Features.Departments.Queries.GetById;
+using Application.Features.Departments.Queries.GetCount;
 using Application.Features.Departments.Queries.GetList;
 using Application.Features.Titles.Commands.Create;
 using Core.Application.Requests;
@@ -42,6 +44,22 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateDepartmentCommand updateDepartmentCommand)
         {
             UpdatedDepartmentResponse response = await Mediator.Send(updateDepartmentCommand);
+            return Ok(response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBydId([FromRoute] Guid id)
+        {
+            GetByIdDepartmentQuery getByIdDepartmentQuery = new() { Id = id };
+            GetByIdDepartmentResponse response = await Mediator.Send(getByIdDepartmentQuery);
+
+            return Ok(response);
+        }
+
+        [HttpGet("GetCount")]
+        public async Task<IActionResult> GetCount()
+        {
+            GetCountDepartmentResponse response = await Mediator.Send(new GetCountDepartmentQuery());
             return Ok(response);
         }
     }

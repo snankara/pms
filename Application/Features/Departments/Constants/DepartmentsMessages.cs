@@ -13,4 +13,7 @@ public sealed class DepartmentsMessages
     public const string NoDepartmentToDeleteWasFound = "No department to delete was found";
 
     public const string NoDepartmentToUpdateWasFound = "No department to update was found";
+
+    public const string NoDepartmentToRetrieveWasFound = "No department to retrieve was found";
+
 }
