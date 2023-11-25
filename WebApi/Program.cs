@@ -18,6 +18,8 @@ builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhos
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +31,8 @@ if (app.Environment.IsDevelopment())
 
 //if (app.Environment.IsProduction())
 app.ConfigureCustomExceptionMiddleware();
+
+app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
 
 app.UseHttpsRedirection();
 
