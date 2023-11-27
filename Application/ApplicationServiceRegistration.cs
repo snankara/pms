@@ -1,4 +1,5 @@
-﻿using Core.Application.Pipelines.Caching;
+﻿using Application.Services.EmployeeService;
+using Core.Application.Pipelines.Caching;
 using Core.Application.Pipelines.Logging;
 using Core.Application.Pipelines.Transaction;
 using Core.Application.Pipelines.Validation;
@@ -34,6 +35,7 @@ public static class ApplicationServiceRegistration
         });
 
         services.AddSingleton<LoggerServiceBase, FileLogger>();
+        services.AddScoped<IEmployeeService, EmployeeManager>();
 
         return services;
     }
