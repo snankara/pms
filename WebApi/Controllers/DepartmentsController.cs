@@ -2,12 +2,10 @@
 using Application.Features.Departments.Commands.Delete;
 using Application.Features.Departments.Commands.Update;
 using Application.Features.Departments.Queries.GetById;
-using Application.Features.Departments.Queries.GetCount;
+using Application.Features.Departments.Queries.GetCountWithEmployee;
 using Application.Features.Departments.Queries.GetList;
-using Application.Features.Titles.Commands.Create;
 using Core.Application.Requests;
 using Core.Application.Responses;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -56,10 +54,10 @@ namespace WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpGet("GetCount")]
-        public async Task<IActionResult> GetCount()
+        [HttpGet("GetCountWithEmployee")]
+        public async Task<IActionResult> GetCountWithEmployee()
         {
-            GetCountDepartmentResponse response = await Mediator.Send(new GetCountDepartmentQuery());
+            GetCountDepartmentWithEmployeeResponse response = await Mediator.Send(new GetCountDepartmentWithEmployeeQuery());
             return Ok(response);
         }
     }
