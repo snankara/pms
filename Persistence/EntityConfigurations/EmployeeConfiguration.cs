@@ -18,8 +18,7 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(e => e.Id).HasColumnName("Id").IsRequired();
         builder.Property(e => e.DepartmentId).HasColumnName("DepartmentId").IsRequired();
         builder.Property(e => e.TitleId).HasColumnName("TitleId").IsRequired();
-        builder.Property(e => e.FirstName).HasColumnName("FirstName").IsRequired();
-        builder.Property(e => e.LastName).HasColumnName("LastName").IsRequired();
+        builder.Property(e => e.UserId).HasColumnName("UserId").IsRequired();
         builder.Property(e => e.BirthDate).HasColumnName("BirthDate").IsRequired();
         builder.Property(e => e.CreatedDate).HasColumnName("CreateDate").IsRequired();
         builder.Property(e => e.UpdatedDate).HasColumnName("UpdatedDate");
@@ -27,6 +26,7 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 
         builder.HasOne(e => e.Department);
         builder.HasOne(e => e.Title);
+        builder.HasOne(e => e.User);
 
 
         builder.HasQueryFilter(e => !e.DeletedDate.HasValue);

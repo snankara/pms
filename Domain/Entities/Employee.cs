@@ -1,4 +1,5 @@
 ﻿using Core.Persistence.Repositories;
+using Core.Security.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +12,15 @@ public class Employee : Entity<Guid>
 {
     public Guid TitleId { get; set; }
     public Guid DepartmentId { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public Guid UserId { get; set; }
     public DateTime BirthDate { get; set; }
 
     public virtual Title? Title { get; set; }
     public virtual Department? Department { get; set; }
+    public virtual User User { get; set; }
 
-    public Employee(Guid titleId, Guid departmentId, string firstName, string lastName, DateTime birthDate)
+    public Employee(Guid titleId, Guid departmentId, DateTime birthDate)
     {
-        FirstName = firstName;
-        LastName = lastName;
         BirthDate = birthDate;
         TitleId = titleId;
         DepartmentId = departmentId;
