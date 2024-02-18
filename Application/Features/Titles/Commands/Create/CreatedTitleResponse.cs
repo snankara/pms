@@ -6,4 +6,4 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Titles.Commands.Create;
 
-public record CreatedTitleResponse(Guid Id, string Name);
+public record CreatedTitleResponse(Guid Id, string Name, DateTime CreatedDate);

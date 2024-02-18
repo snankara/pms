@@ -3,4 +3,4 @@ using Core.Security.Entities;
 
 namespace Application.Services.Repositories;
 
-public interface IOtpAuthenticatorRepository : IAsyncRepository<OtpAuthenticator, Guid> { }
+public interface IOtpAuthenticatorRepository : IAsyncRepository<OtpAuthenticator, int> { }

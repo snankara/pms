@@ -6,4 +6,4 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Titles.Queries.GetById;
 
-public record GetByIdTitleResponse(Guid Id, string Name);
+public record GetByIdTitleResponse(Guid Id, string Name, DateTime CreatedDate);

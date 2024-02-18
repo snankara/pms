@@ -28,7 +28,7 @@ public class UserBusinessRules : BaseBusinessRules
         return Task.CompletedTask;
     }
 
-    public async Task UserIdShouldBeExistsWhenSelected(Guid userId)
+    public async Task UserIdShouldBeExistsWhenSelected(int userId)
     {
         bool doesExist = await _userRepository.AnyAsync(predicate: u => u.Id == userId, enableTracking: false);
         if (doesExist)
@@ -49,7 +49,7 @@ public class UserBusinessRules : BaseBusinessRules
             throw new BusinessException(AuthMessages.UserMailAlreadyExists);
     }
 
-    public async Task UserEmailShouldNotExistsWhenUpdate(Guid userId, string email)
+    public async Task UserEmailShouldNotExistsWhenUpdate(int userId, string email)
     {
         bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Id != userId && u.Email == email, enableTracking: false);
         if (doesExists)

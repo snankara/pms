@@ -3,7 +3,7 @@ using Core.Security.Entities;
 
 namespace Application.Services.Repositories;
 
-public interface IUserOperationClaimRepository : IAsyncRepository<UserOperationClaim, Guid>
+public interface IUserOperationClaimRepository : IAsyncRepository<UserOperationClaim, int>
 {
-    Task<IList<OperationClaim>> GetOperationClaimsByUserIdAsync(Guid userId);
+    Task<IList<OperationClaim>> GetOperationClaimsByUserIdAsync(int userId);
 }

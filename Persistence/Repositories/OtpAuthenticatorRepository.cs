@@ -5,7 +5,7 @@ using Persistence.Contexts;
 
 namespace Persistence.Repositories;
 
-public class OtpAuthenticatorRepository : EfRepositoryBase<OtpAuthenticator, Guid, BaseDbContext>, IOtpAuthenticatorRepository
+public class OtpAuthenticatorRepository : EfRepositoryBase<OtpAuthenticator, int, BaseDbContext>, IOtpAuthenticatorRepository
 {
     public OtpAuthenticatorRepository(BaseDbContext context)
         : base(context) { }

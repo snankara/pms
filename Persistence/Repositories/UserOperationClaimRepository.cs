@@ -6,12 +6,12 @@ using Persistence.Contexts;
 
 namespace Persistence.Repositories;
 
-public class UserOperationClaimRepository : EfRepositoryBase<UserOperationClaim, Guid, BaseDbContext>, IUserOperationClaimRepository
+public class UserOperationClaimRepository : EfRepositoryBase<UserOperationClaim, int, BaseDbContext>, IUserOperationClaimRepository
 {
     public UserOperationClaimRepository(BaseDbContext context)
         : base(context) { }
 
-    public async Task<IList<OperationClaim>> GetOperationClaimsByUserIdAsync(Guid userId)
+    public async Task<IList<OperationClaim>> GetOperationClaimsByUserIdAsync(int userId)
     {
         var operationClaims = await Query()
             .AsNoTracking()

@@ -1,6 +1,9 @@
-﻿using Core.Security.Entities;
+﻿using Application;
+using Core.Security.Constants;
+using Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection;
 
 namespace Persistence.EntityConfigurations;
 
@@ -20,44 +23,41 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
 
         builder.HasMany(t => t.UserOperationClaims);
 
-        //builder.HasData(_seeds);
+        builder.HasData(_seeds);
 
     }
 
-    /*private IEnumerable<OperationClaim> _seeds
+    private IEnumerable<OperationClaim> _seeds
     {
         get
         {
-            //Guid id = 0;
+            int id = 0;
 
-            yield return new OperationClaim(Guid.NewGuid(), GeneralOperationClaims.Admin);
+            yield return new OperationClaim { Id = ++id, Name = GeneralOperationClaim.Admin, CreatedDate = DateTime.Now };
 
+            #region Feature Operation Claims
             IEnumerable<Type> featureOperationClaimsTypes = Assembly
                 .GetAssembly(typeof(ApplicationServiceRegistration))!
                 .GetTypes()
                 .Where(
-                type => 
-                    (type.Namespace?.Contains("Feature") == true)
-                    && (type.Namespace?.Contains("Constans") == true)
-                    && type.IsClass 
-                    && type.Name.EndsWith("OperationClaims")
+                    type =>
+                        (type.Namespace?.Contains("Features") == true)
+                        && (type.Namespace?.Contains("Constants") == true)
+                        && type.IsClass
+                        && type.Name.EndsWith("OperationClaims")
                 );
-
             foreach (Type type in featureOperationClaimsTypes)
             {
-                FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+                FieldInfo[] typeFields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+                IEnumerable<string> typeFieldsValues = typeFields.Select(field => field.GetValue(null)!.ToString()!);
 
-                IEnumerable<string> values = fields.Select(field => field.GetValue(null)!.ToString()!);
-
-                IEnumerable<OperationClaim> featureOperationsClaimsToAdd = values.Select(
-                    value => new OperationClaim(id: Guid.NewGuid(), name: value)
-                    );
-
-                foreach (OperationClaim featureOperationClaim in featureOperationsClaimsToAdd)
-                {
+                IEnumerable<OperationClaim> featureOperationClaimsToAdd = typeFieldsValues.Select(
+                    value => new OperationClaim { Id = ++id, Name = value, CreatedDate = DateTime.Now }
+                );
+                foreach (OperationClaim featureOperationClaim in featureOperationClaimsToAdd)
                     yield return featureOperationClaim;
-                }
             }
+            #endregion
         }
-    }*/
+    }
 }

@@ -50,13 +50,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             passwordSalt: out byte[] passwordSalt);
 
         User user = new(
-            id: Guid.NewGuid(),
+            id: 1,
             firstName: "Admin",
             lastName: "Admin",
             email: "admin@example.com",
             passwordSalt: passwordSalt,
             passwordHash: passwordHash,
-            createdDate: DateTime.UtcNow,
+            createdDate: DateTime.Now,
             status: true
             );
 

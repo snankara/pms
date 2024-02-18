@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services.Repositories;
 
-public interface IRefreshTokenRepository : IAsyncRepository<RefreshToken, Guid>
+public interface IRefreshTokenRepository : IAsyncRepository<RefreshToken, int>
 {
-    Task<List<RefreshToken>> GetOldRefreshTokensAsync(Guid userId, int refreshTokenTTL);
+    Task<List<RefreshToken>> GetOldRefreshTokensAsync(int userId, int refreshTokenTTL);
 }

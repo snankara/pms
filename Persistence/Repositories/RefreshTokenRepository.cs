@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories;
 
-public class RefreshTokenRepository : EfRepositoryBase<RefreshToken, Guid, BaseDbContext>, IRefreshTokenRepository
+public class RefreshTokenRepository : EfRepositoryBase<RefreshToken, int, BaseDbContext>, IRefreshTokenRepository
 {
     public RefreshTokenRepository(BaseDbContext context)
         : base(context) { }
 
-    public async Task<List<RefreshToken>> GetOldRefreshTokensAsync(Guid userId, int refreshTokenTTL)
+    public async Task<List<RefreshToken>> GetOldRefreshTokensAsync(int userId, int refreshTokenTTL)
     {
         List<RefreshToken> tokens = await Query()
             .AsNoTracking()
@@ -24,8 +24,8 @@ public class RefreshTokenRepository : EfRepositoryBase<RefreshToken, Guid, BaseD
                 r =>
                     r.UserId == userId
                     && r.Revoked == null
-                    && r.Expires >= DateTime.UtcNow
-                    && r.CreatedDate.AddDays(refreshTokenTTL) <= DateTime.UtcNow
+                    && r.Expires >= DateTime.Now
+                    && r.CreatedDate.AddDays(refreshTokenTTL) <= DateTime.Now
             )
             .ToListAsync();
 
